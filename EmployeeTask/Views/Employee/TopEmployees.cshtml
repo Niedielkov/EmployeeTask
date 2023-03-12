@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["PageTitle"] = "Top Employees Last Month";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <ejs-grid id="employees" dataSource="@ViewBag.TopEmployees" gridLines="None" allowSorting="true">
+            <e-grid-pagesettings pageSize="5"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Employee" field="employee.FullName" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Email" field="employee.Email" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Phone" field="employee.PhoneNumber" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Salary" field="employee.FormatedSalary" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Birth" field="employee.DateOfBirth" type="Date" format="MMM-dd-yyyy" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Completed missions" field="completeCount" textAlign="Center"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ejs-accumulationchart id="doughnutchart" enableSmartLabels>
+            <e-accumulation-series-collection>
+                <e-accumulation-series dataSource="@ViewBag.TopEmployees" xName="employee.FullName" yName="completeCount" innerRadius="40%" legendShape="Circle" palettes=@(new string[]{"#0e8d76","#a4b219","#cb9b00","#8a442c","#0454b5","#7d0a0a","#822690","#4c2090","#313e93","#0096ac"})>
+                    <e-accumulationseries-datalabel name="completeCount" visible></e-accumulationseries-datalabel>
+                </e-accumulation-series>
+            </e-accumulation-series-collection>
+            <e-accumulationchart-legendsettings position="Top" toggleVisibility="false">
+                <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+            </e-accumulationchart-legendsettings>
+            <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+        </ejs-accumulationchart>
+    </div>
+</div>

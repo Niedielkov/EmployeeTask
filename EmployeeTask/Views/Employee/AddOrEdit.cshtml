@@ -1,0 +1,46 @@
+﻿@model EmployeeTask.Models.Employee
+
+@{
+    ViewData["PageTitle"] = Model.EmployeeId == 0 ? "Create new employee" : "Edit employee";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="widget p-5" style="background-color: #fff">
+            <form asp-action="AddOrEdit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" name="EmployeeId" value="@Model.EmployeeId" />
+                <div class="mb-3">
+                    <ejs-textbox id="firstName" placeholder="First Name" ejs-for="FirstName" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="FirstName" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="lastName" placeholder="Last Name" ejs-for="LastName" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="LastName" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="email" placeholder="Email" ejs-for="Email" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="Email" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-textbox id="phoneNumber" placeholder="Phone" ejs-for="PhoneNumber" floatLabelType="Always"></ejs-textbox>
+                    <span asp-validation-for="PhoneNumber" class="text-danger fs-6"></span>
+                </div>
+                <div class="mb-3">
+                    <ejs-datepicker id="dateOfBirth" ejs-for="DateOfBirth" placeholder="Date Of Birth" floatLabelType="Always" format="MMM-dd-yyyy"></ejs-datepicker>
+                </div>
+                <div class="mb-3">
+                    <ejs-numerictextbox id="monthlySalary" ejs-for="MonthlySalary" placeholder="Salary" floatLabelType="Always" min="0" format="c0"></ejs-numerictextbox>
+                    <span asp-validation-for="MonthlySalary" class="text-danger fs-6"></span>
+                </div>
+                <ejs-button id="submit" type="submit" content="submit" cssClass="e-success"></ejs-button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

@@ -1,0 +1,77 @@
+﻿@model IEnumerable<EmployeeTask.Models.Mission>
+
+@{
+    ViewData["PageTitle"] = "Missions List";
+    ViewData["PageActionText"] = "+ New Mission";
+    ViewData["PageActionUrl"] = "/Mission/AddOrEdit";
+}
+
+<div class="row mb-3">
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget">
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Missions: @ViewBag.TotalMissions</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget">
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">In Progress: @ViewBag.TotalInProgress</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget">
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Canceled: @ViewBag.TotalCanceled</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="d-flex flex-row widget">
+            <div class="d-flex flex-column m-auto py-3">
+                <span class="lead">Completed: @ViewBag.TotalCompleted</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <ejs-grid id="missions" dataSource="@Model" gridLines="None" allowSorting="true" allowPaging="true">
+            <e-grid-pagesettings pageSize="12"></e-grid-pagesettings>
+            <e-grid-columns>
+                <e-grid-column headerText="Mission" field="Title" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Description" field="Description" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Assignee" field="Employee.FullName" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Status" template="#statusColumnTemplate" width="150px" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Due Date" field="DueDate" type="Date" format="MMM-dd-yyyy" textAlign="Center"></e-grid-column>
+                <e-grid-column headerText="Actions" template="#actionColumnTemplate" width="150px" textAlign="Center"></e-grid-column>
+            </e-grid-columns>
+        </ejs-grid>
+    </div>
+</div>
+
+<script id="statusColumnTemplate" type="text/x-template">
+    ${if(Status == "Completed")}
+        <span class="badge bg-success">${Status}</span>
+    ${else if(Status == "Canceled")}
+        <span class="badge bg-danger">${Status}</span>
+    ${else}
+        <span class="badge bg-secondary">${Status}</span>
+    ${/if}
+</script>
+
+<script id="actionColumnTemplate" type="text/x-template">
+    <div class="d-flex flex-row justify-content-start">
+        <a class="btn btn-sm no-a-decoration" href="/Mission/AddOrEdit/${MissionId}">
+            <i class="fa-solid fa-pen fa-lg"></i>
+        </a>
+        <form action="/Mission/Delete/${MissionId}" method="post">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="btn btn-sm btn-link no-a-decoration" onclick="return confirm(&quot;Are you sure to delete this record?&quot;)">
+                <i class="fa-solid fa-trash-can fa-lg text-danger"></i>
+            </button>
+        </form>
+    </div>
+</script>
